@@ -15,7 +15,10 @@ class Album extends React.Component {
             image: '',
             type: null,
             artists: [],
-            tracks: []
+            tracks: {
+                total: null,
+                items: []
+            }
         }
 
         this.getAlbum()
@@ -24,7 +27,7 @@ class Album extends React.Component {
     getAlbum = () => {
         request.get('/albums/' + this.props.match.params.id).then(data => {
             this.prepareAlbum(data)
-            this.prepareTracks(data.tracks.items)
+            this.prepareTracks(data.tracks)
         })
         
     }
@@ -42,13 +45,16 @@ class Album extends React.Component {
 
     prepareTracks = (tracks) => {
         this.setState({
-            tracks: tracks.map(track => {
-                return {
-                    id: track.id,
-                    name: track.name,
-                    duration: track.duration_ms
-                }
-            })
+            tracks: {
+                total: tracks.total,
+                items: tracks.items.map(track => {
+                    return {
+                        id: track.id,
+                        name: track.name,
+                        duration: track.duration_ms
+                    }
+                })
+            }
         })
     }
 
