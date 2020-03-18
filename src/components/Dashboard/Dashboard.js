@@ -13,6 +13,7 @@ class Dashboard extends React.Component {
             recentlyPlayed: [],
             topTracks: [],
             topArtists: [],
+            myPlaylists: [],
             isLoading: true
         }
 
@@ -23,14 +24,14 @@ class Dashboard extends React.Component {
         Promise.all([
             request.get('/me/player/recently-played'),
             request.get('/me/top/tracks'),
-            request.get('/me/top/artists')
+            request.get('/me/top/artists'),
+            request.get('/me/playlists')
         ]).then(data => {
-            console.log(data)
-
             this.setState({
                 recentlyPlayed: this.prepareRecentlyPlayed(data[0].items),
                 topTracks: this.prepareTracks(data[1].items),
                 topArtists: this.prepareArtists(data[2].items),
+                myPlaylists: this.preparePlaylists(data[3].items),
                 isLoading: false
             })
         })
@@ -64,18 +65,34 @@ class Dashboard extends React.Component {
         })
     }
 
+    preparePlaylists = (playlists) => {
+        console.log(playlists)
+        return playlists.map(playlist => {
+            return {
+                id: playlist.id,
+                name: playlist.name,
+                image: playlist.images[0].url,
+                type: 'playlist'
+            }
+        })
+    }
+
     render () {
         return (
-            <Collapse className="card-collapse" value={['1', '2']}>
-                <Collapse.Item title="Top Tracks" name="1">
+            <Collapse className="card-collapse" value={['1', '2', '3', '4']}>
+                <Collapse.Item title="Recently Played" name="1">
                     <CardScroller items={this.state.recentlyPlayed}/>
                 </Collapse.Item>
-                <Collapse.Item title="Top Tracks" name="1">
+                <Collapse.Item title="Top Tracks" name="2">
                     <CardScroller items={this.state.topTracks}/>
                 </Collapse.Item>
-                <Collapse.Item title="Top Artists" name="2">
+                <Collapse.Item title="Top Artists" name="3">
                     <CardScroller items={this.state.topArtists}/>
                 </Collapse.Item>
+                <Collapse.Item title="My Playlists" name="4">
+                    <CardScroller items={this.state.myPlaylists}/>
+                </Collapse.Item>
+                
             </Collapse>
         )
     }

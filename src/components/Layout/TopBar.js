@@ -1,11 +1,18 @@
 import React from 'react'
+import {withRouter} from 'react-router'
 import {Layout, Dropdown, Button} from 'element-react'
 import auth from './../Auth/Auth'
 
 class TopBar extends React.Component {
+
+    goBack = () => {
+        this.props.history.goBack();
+    }
+
     render () {
         return (
-            <Layout.Row type="flex" justify="end">
+            <Layout.Row>
+                <Button className="left" icon="arrow-left" onClick={this.goBack}>Back</Button>
                 <Dropdown className="user-dropdown right" trigger="click" menu={(
                     <Dropdown.Menu>
                     <Dropdown.Item>Profile</Dropdown.Item>
@@ -26,4 +33,4 @@ class TopBar extends React.Component {
     }
 }
 
-export default TopBar
+export default withRouter(TopBar)

@@ -15,7 +15,7 @@ class MediaHeaderData extends React.Component {
                 <div className="Media-Name">
                     <h1>{this.props.name}</h1>
                 </div>
-                { this.props.type && this.props.type !== 'artist' &&
+                { this.props.type && this.props.type !== 'artist' && this.props.type !== 'playlist' &&
                     <div className="Media-Artists">
                         <h5>
                             By {this.props.artists.map(artist => {
@@ -25,9 +25,9 @@ class MediaHeaderData extends React.Component {
                     </div>
                 }
                 <div className="Media-Metadata">
-                    <h5>Album: { this.props.type === 'track' && this.props.album &&
-                            <Link to={'/album/' + this.props.album.id}>{this.props.album.name}</Link>            
-                        }</h5>
+                    { this.props.type === 'track' && this.props.album &&
+                        <h5>Album: <Link to={'/album/' + this.props.album.id}>{this.props.album.name}</Link></h5>
+                    }
                 </div>
                 <div className="Media-Actions"></div>
             </div>

@@ -8,6 +8,7 @@ import Dashboard from './Dashboard/Dashboard'
 import Track from './Media/Track/Track'
 import Artist from './Media/Artist/Artist'
 import Album from './Media/Album/Album'
+import Playlist from './Media/Playlist/Playlist'
 
 
 class Home extends React.Component {
@@ -34,7 +35,7 @@ class Home extends React.Component {
                                 <Album/>
                             </Route>
                             <Route path="/playlist/:id">
-                                <span>home</span>
+                                <Playlist/>
                             </Route>
                         </Switch>
                     </Layout.Row>
