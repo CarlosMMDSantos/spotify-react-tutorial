@@ -1,25 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Route} from 'react-router-dom';
+
+import { Layout } from 'element-react'
+
+import Home from './components/Home'
+import Callback from './components/Auth/Callback';
+import Login from './components/Auth/Login'
+import SecuredRoute from './components/Auth/SecuredRoute'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout.Row className="full-viewport-height" type="flex" align="middle" justify="center">
+      <Route exact path='/callback' component={Callback}/>
+      <Route exact path='/login' component={Login}/>
+      <SecuredRoute exact path='/' component={Home} />
+    </Layout.Row>
   );
 }
 
