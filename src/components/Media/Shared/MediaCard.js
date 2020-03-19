@@ -10,7 +10,7 @@ class MediaCard extends React.Component {
 
     render () {
         return (
-            <Box className="media-card" width="8em" height="12em">
+            <Box className="media-card" minWidth="8em" width="8em" height="12em">
                 <Card>
                     <CardMedia className="media-card-image" image={this.props.image}/>
                 </Card>

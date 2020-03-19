@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Grid, Typography } from '@material-ui/core'
 
 class MediaHeaderData extends React.Component {
     constructor (props) {
@@ -8,29 +9,39 @@ class MediaHeaderData extends React.Component {
 
     render () {
         return (
-            <div className="media-data-container">
-                <div className="Media-Type">
-                    <h5>{this.props.type}</h5>
-                </div>
-                <div className="Media-Name">
-                    <h1>{this.props.name}</h1>
-                </div>
+            <Grid container direction="column">
+                <Grid item>
+                    <Typography variant="overline">
+                        {this.props.type}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Typography variant="h3">
+                        {this.props.name}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Typography variant="subtitle1">
+                        <div dangerouslySetInnerHTML={{ __html: this.props.description }} />
+                    </Typography>
+                </Grid>
                 { this.props.type && this.props.type !== 'artist' && this.props.type !== 'playlist' &&
-                    <div className="Media-Artists">
-                        <h5>
-                            By {this.props.artists.map(artist => {
-                                    return <Link key={artist.id} to={'/artist/' + artist.id}>{artist.name}</Link>
-                            })}
-                        </h5>
-                    </div>
+                        <Grid item>
+                            <Typography variant="body1">
+                                By {this.props.artists.map(artist => {
+                                            return <Link key={artist.id} to={'/artist/' + artist.id}>{artist.name}</Link>
+                                    })}
+                            </Typography>
+                        </Grid>
                 }
-                <div className="Media-Metadata">
-                    { this.props.type === 'track' && this.props.album &&
-                        <h5>Album: <Link to={'/album/' + this.props.album.id}>{this.props.album.name}</Link></h5>
-                    }
-                </div>
-                <div className="Media-Actions"></div>
-            </div>
+                { this.props.type === 'track' && this.props.album &&
+                        <Grid item>
+                            <Typography variant="body1">
+                                Album: <Link to={'/album/' + this.props.album.id}>{this.props.album.name}</Link>
+                            </Typography>
+                        </Grid>
+                }
+            </Grid>            
         )
     }
 }

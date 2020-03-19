@@ -33,6 +33,7 @@ class Playlist extends React.Component {
         this.setState({
             name: playlist.name,
             image: playlist.images[0].url,
+            description: playlist.description,
             type: playlist.type,
             tracks: {
                 total: playlist.tracks.total,
@@ -68,7 +69,7 @@ class Playlist extends React.Component {
         return (
             <Layout.Row>
                 <Layout.Row>
-                    <MediaHeader data={{name: this.state.name, image: this.state.image, type: this.state.type}}/>
+                    <MediaHeader data={{name: this.state.name, image: this.state.image, type: this.state.type, description: this.state.description}}/>
                 </Layout.Row>
                 <Layout.Row>
                     <h3>Tracks</h3>

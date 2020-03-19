@@ -79,22 +79,22 @@ class Dashboard extends React.Component {
     render () {
         return (
             <Container>
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     Recently Played
                 </Typography>
                 <CardScroller items={this.state.recentlyPlayed}/>
                 
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     Top Tracks
                 </Typography>
                 <CardScroller items={this.state.topTracks}/>
 
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     Top Artists
                 </Typography>
                 <CardScroller items={this.state.topArtists}/>
 
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     My Playlists
                 </Typography>
                 <CardScroller items={this.state.myPlaylists}/>

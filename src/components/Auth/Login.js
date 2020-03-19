@@ -29,7 +29,7 @@ class Login extends React.Component {
                             <br/>
                             <br/>
                             <br/>
-                            <Grid item xs={12} type="flex" justify="center">
+                            <Grid item xs={12}>
                                 <Button variant="contained" color="primary" onClick={this.handleLogin}>
                                     Login with Spotify
                                 </Button>

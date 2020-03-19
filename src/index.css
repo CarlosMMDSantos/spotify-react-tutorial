@@ -65,6 +65,12 @@ a {
   object-fit: cover;
 }
 
+.media-header-image {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+}
+
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;

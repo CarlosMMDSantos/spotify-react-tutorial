@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { List, ListItem, ListItemAvatar, ListItemText, ListItemIcon, Divider, Avatar  } from '@material-ui/core'
 import { Dashboard, Star, ViewDay } from '@material-ui/icons'
 import auth from '../Auth/Auth'
@@ -22,7 +23,9 @@ class SideBar extends React.Component {
                   <Dashboard/>
               </ListItemIcon>
               <ListItemText>
-                  Dashboard
+                    <Link to="/">
+                        Dashboard
+                    </Link>
               </ListItemText>
           </ListItem>
           <ListItem button>
@@ -30,7 +33,9 @@ class SideBar extends React.Component {
                   <Star/>
               </ListItemIcon>
               <ListItemText>
-                  Favourites
+                <Link to="/">
+                    Favourites
+                </Link>
               </ListItemText>
           </ListItem>
           <ListItem button>
@@ -38,7 +43,9 @@ class SideBar extends React.Component {
                   <ViewDay/>
               </ListItemIcon>
               <ListItemText>
-                  Playlists
+                <Link to="/playlists">
+                    Playlists
+                </Link>
               </ListItemText>
           </ListItem>
       </List>
