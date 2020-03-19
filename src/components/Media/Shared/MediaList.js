@@ -21,7 +21,7 @@ class MediaList extends React.Component {
                     <tbody>
                         {
                             this.props.tracks.items.map(track => {
-                                return (<tr>
+                                return (<tr key={track.id}>
                                     <td>
                                         <Link to={'/track/' + track.id}>{track.name}</Link>
                                     </td>

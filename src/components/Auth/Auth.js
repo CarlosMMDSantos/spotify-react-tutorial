@@ -29,8 +29,6 @@ class Auth {
 
         this.profile = await request.get('/me')
 
-        console.log(this.profile)
-
         resolve();
       })
     })

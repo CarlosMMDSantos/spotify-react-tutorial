@@ -7,8 +7,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  text-decoration: none;
+}
+
 .full-viewport-height {
   height: 100vh
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%
 }
 
 .card-login {
@@ -18,10 +30,6 @@ body {
 
 .margin-auto {
   margin: auto;
-}
-
-.full-width {
-  width: 100%;
 }
 
 .left {
@@ -43,34 +51,18 @@ body {
   position: absolute;
 }
 
-.topbar-container {
-  height: 3rem;
-  flex: 0 1 auto;
-  padding: 8px 12px;
-}
-
-.body-container {
-  flex: 1 1 auto;
-  padding: 8px 12px;
+.top-bar {
+  background-color: transparent;
 }
 
 .user-dropdown {
   max-width: 170px;
 }
 
-.media-card {
-  width: 175px;
-  height: 300px;
-}
-
-.media-card img {
-  width: 175px;
-  height: 175px;
+.media-card-image {
+  width: inherit;
+  height: 8em;
   object-fit: cover;
-}
-
-.media-card .media-data h4 {
-  margin: 0;
 }
 
 .ellipsis {

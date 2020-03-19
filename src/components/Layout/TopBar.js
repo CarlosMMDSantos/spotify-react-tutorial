@@ -1,7 +1,8 @@
 import React from 'react'
-import {withRouter} from 'react-router'
-import {Layout, Dropdown, Button} from 'element-react'
-import auth from './../Auth/Auth'
+import { withRouter } from 'react-router'
+
+import {AppBar, Toolbar, Grid, TextField, IconButton} from '@material-ui/core'
+import { Search, ArrowBackIos } from '@material-ui/icons'
 
 class TopBar extends React.Component {
 
@@ -11,24 +12,23 @@ class TopBar extends React.Component {
 
     render () {
         return (
-            <Layout.Row>
-                <Button className="left" icon="arrow-left" onClick={this.goBack}>Back</Button>
-                <Dropdown className="user-dropdown right" trigger="click" menu={(
-                    <Dropdown.Menu>
-                    <Dropdown.Item>Profile</Dropdown.Item>
-                    <Dropdown.Item>Logout</Dropdown.Item>
-                    </Dropdown.Menu>
-                )}>
-                    <div className="full-width" style={{display: 'flex', alignItems: 'center'}}>
-                        <div className="left">
-                            {auth.profile.display_name}
-                        </div>
-                        <div className="right">
-                            <img src={auth.profile.images[0].url} style={{height: "2rem", borderRadius: "100%"}}/>
-                        </div>
-                    </div>
-              </Dropdown>
-            </Layout.Row>
+            <AppBar position="static" color="transparent" elevation={0} >
+                <Toolbar variant="dense">
+                    <Grid container spacing={1} alignItems="flex-end">
+                        <Grid item>
+                            <IconButton onClick={this.goBack}>
+                                <ArrowBackIos/>
+                            </IconButton>
+                        </Grid>
+                        <Grid item>
+                            <Search />
+                        </Grid>
+                        <Grid item>
+                            <TextField id="input-with-icon-grid" label="With a grid" />
+                        </Grid>
+                    </Grid>
+                </Toolbar>
+            </AppBar>
         )
     }
 }

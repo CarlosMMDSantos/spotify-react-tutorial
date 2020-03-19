@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { Box, Card, CardMedia, Typography } from '@material-ui/core'
+
 class MediaCard extends React.Component {
     constructor (props) {
         super(props)
@@ -8,20 +10,19 @@ class MediaCard extends React.Component {
 
     render () {
         return (
-            <div className="media-card">
+            <Box className="media-card" width="8em" height="12em">
+                <Card>
+                    <CardMedia className="media-card-image" image={this.props.image}/>
+                </Card>
                 <Link to={'/' + this.props.type + '/' + this.props.id}>
-                    <img src={this.props.image}/>
-                    <div className="media-data">
-                        <div className="ellipsis">
-                            <h4>{this.props.title}</h4>
-                        </div>
-                        
-                        <div className="ellipsis-two-lines">
-                            {this.props.description}
-                        </div>
-                    </div>
+                    <Typography variant="h6" component="h2" noWrap>
+                        {this.props.title}
+                    </Typography>
+                    <Typography variant="body2" component="p" noWrap>
+                        {this.props.description}
+                    </Typography>
                 </Link>
-            </div>
+            </Box>
         )
     }
 }

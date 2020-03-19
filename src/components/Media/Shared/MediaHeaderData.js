@@ -19,7 +19,7 @@ class MediaHeaderData extends React.Component {
                     <div className="Media-Artists">
                         <h5>
                             By {this.props.artists.map(artist => {
-                                    return <Link to={'/artist/' + artist.id}>{artist.name}</Link>
+                                    return <Link key={artist.id} to={'/artist/' + artist.id}>{artist.name}</Link>
                             })}
                         </h5>
                     </div>

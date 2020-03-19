@@ -2,7 +2,7 @@ import React from 'react'
 import { map } from 'lodash'
 import request from "../../api/spotifyFetch";
 
-import { Collapse } from 'element-react'
+import { Container, Typography } from '@material-ui/core'
 import CardScroller from '../Media/Shared/MediaCardScroller'
 
 class Dashboard extends React.Component {
@@ -66,7 +66,6 @@ class Dashboard extends React.Component {
     }
 
     preparePlaylists = (playlists) => {
-        console.log(playlists)
         return playlists.map(playlist => {
             return {
                 id: playlist.id,
@@ -79,21 +78,27 @@ class Dashboard extends React.Component {
 
     render () {
         return (
-            <Collapse className="card-collapse" value={['1', '2', '3', '4']}>
-                <Collapse.Item title="Recently Played" name="1">
-                    <CardScroller items={this.state.recentlyPlayed}/>
-                </Collapse.Item>
-                <Collapse.Item title="Top Tracks" name="2">
-                    <CardScroller items={this.state.topTracks}/>
-                </Collapse.Item>
-                <Collapse.Item title="Top Artists" name="3">
-                    <CardScroller items={this.state.topArtists}/>
-                </Collapse.Item>
-                <Collapse.Item title="My Playlists" name="4">
-                    <CardScroller items={this.state.myPlaylists}/>
-                </Collapse.Item>
+            <Container>
+                <Typography variant="h3" gutterBottom>
+                    Recently Played
+                </Typography>
+                <CardScroller items={this.state.recentlyPlayed}/>
                 
-            </Collapse>
+                <Typography variant="h3" gutterBottom>
+                    Top Tracks
+                </Typography>
+                <CardScroller items={this.state.topTracks}/>
+
+                <Typography variant="h3" gutterBottom>
+                    Top Artists
+                </Typography>
+                <CardScroller items={this.state.topArtists}/>
+
+                <Typography variant="h3" gutterBottom>
+                    My Playlists
+                </Typography>
+                <CardScroller items={this.state.myPlaylists}/>
+            </Container>
         )
     }
 }
