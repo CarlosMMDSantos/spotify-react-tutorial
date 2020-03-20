@@ -33,7 +33,7 @@ class MediaList extends React.Component {
                                                 <Typography variant="body1" noWrap>
                                                     {
                                                         track.artists.map(artist => {                                                            
-                                                            return <Link to={'/artist/' + artist.id}>{artist.name}</Link>
+                                                            return <Link key={artist.id} to={'/artist/' + artist.id}>{artist.name}</Link>
                                                         })
                                                     }
                                                 </Typography>

@@ -26,6 +26,7 @@ class Album extends React.Component {
 
     getAlbum = () => {
         request.get('/albums/' + this.props.match.params.id).then(data => {
+            console.log(data.tracks)
             this.prepareAlbum(data)
             this.prepareTracks(data.tracks)
         })
@@ -51,6 +52,12 @@ class Album extends React.Component {
                     return {
                         id: track.id,
                         name: track.name,
+                        artists: track.artists.map(artist => {
+                            return {
+                                id: artist.url,
+                                name: artist.name
+                            }
+                        }),
                         duration: track.duration_ms
                     }
                 })
