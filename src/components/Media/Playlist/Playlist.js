@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import { Layout } from 'element-react'
+import { Grid } from '@material-ui/core'
 import MediaHeader from './../Shared/MediaHeader'
 import MediaList from './../Shared/MediaList'
 import request from './../../../api/spotifyFetch'
@@ -78,15 +78,15 @@ class Playlist extends React.Component {
 
     render () {
         return (
-            <Layout.Row>
-                <Layout.Row>
+            <Grid container>
+                <Grid item xs={12}>
                     <MediaHeader data={{name: this.state.name, image: this.state.image, type: this.state.type, description: this.state.description}}/>
-                </Layout.Row>
-                <Layout.Row>
+                </Grid>
+                <Grid item xs={12}>
                     <h3>Tracks</h3>
                     <MediaList tracks={this.state.tracks} showMore={this.showMore}/>
-                </Layout.Row>
-            </Layout.Row>
+                </Grid>
+            </Grid>
         )
     }
 

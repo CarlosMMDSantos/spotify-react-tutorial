@@ -1,9 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
 import request from '../../../api/spotifyFetch'
 
-import { Layout, Loading } from 'element-react'
+import { Grid } from '@material-ui/core'
 import MediaHeader from './../Shared/MediaHeader'
 
 class Track extends React.Component {
@@ -51,20 +50,19 @@ class Track extends React.Component {
 
     render () {
         return (
-            <Layout.Row gutter={20}>
+            <Grid container>
                 { this.state.loading && 
-                    <Loading/>
+                    <Grid item xs={12}>
+                        <span>Loading...</span>
+                    </Grid>
                 }
 
                 { !this.state.loading &&
-
-                    <Layout.Row>
-                        <Layout.Row>
-                            <MediaHeader data={{name: this.state.name, image: this.state.album.image, type: this.state.type, artists: this.state.artists, album: this.state.album}}/>
-                        </Layout.Row>
-                    </Layout.Row>
+                    <Grid item xs={12}>
+                        <MediaHeader data={{name: this.state.name, image: this.state.album.image, type: this.state.type, artists: this.state.artists, album: this.state.album}}/>
+                    </Grid> 
                 }
-            </Layout.Row>
+            </Grid>
         )
     }
 }

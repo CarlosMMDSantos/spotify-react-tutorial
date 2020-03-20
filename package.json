@@ -9,7 +9,6 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "client-oauth2": "^4.2.5",
-    "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",

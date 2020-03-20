@@ -1,13 +1,12 @@
 import React from 'react'
-import {withRouter} from 'react-router'
-import {Link} from 'react-router-dom'
+import { withRouter } from 'react-router'
 import request from '../../../api/spotifyFetch'
 import MediaList from '../Shared/MediaList'
-import { Layout } from 'element-react'
+import { Grid } from '@material-ui/core'
 import MediaHeader from './../Shared/MediaHeader'
 
 class Album extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props)
 
         this.state = {
@@ -30,7 +29,7 @@ class Album extends React.Component {
             this.prepareAlbum(data)
             this.prepareTracks(data.tracks)
         })
-        
+
     }
 
     prepareAlbum = (album) => {
@@ -54,7 +53,7 @@ class Album extends React.Component {
                         name: track.name,
                         artists: track.artists.map(artist => {
                             return {
-                                id: artist.url,
+                                id: artist.id,
                                 name: artist.name
                             }
                         }),
@@ -65,17 +64,17 @@ class Album extends React.Component {
         })
     }
 
-    render () {
+    render() {
         return (
-            <Layout.Row>
-                <Layout.Row>
-                    <MediaHeader data={{name: this.state.name, image: this.state.image, type: this.state.type, artists: this.state.artists}}/>
-                </Layout.Row>
-                <Layout.Row>
+            <Grid container>
+                <Grid item xs={12}>
+                    <MediaHeader data={{ name: this.state.name, image: this.state.image, type: this.state.type, artists: this.state.artists }} />
+                </Grid>
+                <Grid item xs={12}>
                     <h3>Tracks</h3>
-                    <MediaList tracks={this.state.tracks}/>
-                </Layout.Row>
-            </Layout.Row>
+                    <MediaList tracks={this.state.tracks} />
+                </Grid>
+            </Grid>
         )
     }
 }

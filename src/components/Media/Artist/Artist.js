@@ -2,7 +2,7 @@ import React from 'react'
 import {withRouter} from 'react-router'
 import request from '../../../api/spotifyFetch'
 
-import { Layout } from 'element-react'
+import { Grid } from '@material-ui/core'
 import CardScroller from '../Shared/MediaCardScroller'
 import MediaHeader from './../Shared/MediaHeader'
 
@@ -72,19 +72,19 @@ class Artist extends React.Component {
 
     render () {
         return (
-            <Layout.Row>
-                <Layout.Row>
+            <Grid container>
+                <Grid item xs={12}>
                     <MediaHeader data={{name: this.state.name, image: this.state.image, type: this.state.type}}/>
-                </Layout.Row>
-                <Layout.Row>
+                </Grid>
+                <Grid item xs={12}>
                     <h3>Top tracks</h3>
                     <CardScroller items={this.state.topTracks}/>
-                </Layout.Row>
-                <Layout.Row>
+                </Grid>
+                <Grid item xs={12}>
                     <h3>Albums</h3>
                     <CardScroller items={this.state.albums}/>
-                </Layout.Row>
-            </Layout.Row>
+                </Grid>
+            </Grid>
         )
     }
 }
