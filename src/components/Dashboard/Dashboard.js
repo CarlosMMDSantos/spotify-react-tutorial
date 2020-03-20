@@ -24,14 +24,12 @@ class Dashboard extends React.Component {
         Promise.all([
             request.get('/me/player/recently-played'),
             request.get('/me/top/tracks'),
-            request.get('/me/top/artists'),
-            request.get('/me/playlists')
+            request.get('/me/top/artists')
         ]).then(data => {
             this.setState({
                 recentlyPlayed: this.prepareRecentlyPlayed(data[0].items),
                 topTracks: this.prepareTracks(data[1].items),
                 topArtists: this.prepareArtists(data[2].items),
-                myPlaylists: this.preparePlaylists(data[3].items),
                 isLoading: false
             })
         })
@@ -65,17 +63,6 @@ class Dashboard extends React.Component {
         })
     }
 
-    preparePlaylists = (playlists) => {
-        return playlists.map(playlist => {
-            return {
-                id: playlist.id,
-                name: playlist.name,
-                image: playlist.images[0].url,
-                type: 'playlist'
-            }
-        })
-    }
-
     render () {
         return (
             <Container>
@@ -93,11 +80,6 @@ class Dashboard extends React.Component {
                     Top Artists
                 </Typography>
                 <CardScroller items={this.state.topArtists}/>
-
-                <Typography variant="h4" gutterBottom>
-                    My Playlists
-                </Typography>
-                <CardScroller items={this.state.myPlaylists}/>
             </Container>
         )
     }

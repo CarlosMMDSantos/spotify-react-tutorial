@@ -29,7 +29,6 @@ class Playlist extends React.Component {
     }
 
     preparePlaylist = (playlist) => {
-        console.log(playlist)
         this.setState({
             name: playlist.name,
             image: playlist.images[0].url,
@@ -41,6 +40,12 @@ class Playlist extends React.Component {
                     return {
                         id: item.track.id,
                         name: item.track.name,
+                        artists: item.track.artists.map(artist => {
+                            return {
+                                id: artist.url,
+                                name: artist.name
+                            }
+                        }),
                         duration: item.track.duration_ms
                     }
                 })
@@ -57,6 +62,12 @@ class Playlist extends React.Component {
                         return {
                             id: item.track.id,
                             name: item.track.name,
+                            artists: item.track.artists.map(artist => {
+                                return {
+                                    id: artist.url,
+                                    name: artist.name
+                                }
+                            }),
                             duration: item.track.duration_ms
                         }
                     }))
