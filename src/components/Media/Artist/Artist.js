@@ -37,7 +37,7 @@ class Artist extends React.Component {
     prepareArtist = (artist) => {
         this.setState({
             name: artist.name,
-            image: artist.images[0].url,
+            image: artist.images.length > 0 ? artist.images[0].url : '',
             type: 'artist'
         })
     }
@@ -49,7 +49,7 @@ class Artist extends React.Component {
                     id: track.id,
                     name: track.name,
                     duration: track.duration_ms,
-                    image: track.album.images[0].url,
+                    image: track.album.images.length > 0 ? track.album.images[0].url : '',
                     type: 'track'
                 }
             })
@@ -62,7 +62,7 @@ class Artist extends React.Component {
                 return {
                     id: album.id,
                     name: album.name,
-                    image: album.images[0].url,
+                    image: album.images.length > 0 ? album.images[0].url : '',
                     releaseDate: album.release_date,
                     type: 'album',
                 }

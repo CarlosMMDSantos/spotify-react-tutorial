@@ -11,7 +11,7 @@ class SideBar extends React.Component {
       <List>
           <ListItem button>
               <ListItemAvatar>
-                  <Avatar src={auth.profile.images[0].url}/>
+                  <Avatar src={auth.profile.images.length ? auth.profile.images[0].url : ''}/>
               </ListItemAvatar>
               <ListItemText>
                   {auth.profile.display_name}

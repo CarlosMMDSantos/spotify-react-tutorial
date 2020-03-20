@@ -35,7 +35,7 @@ class Track extends React.Component {
             album: {
                 id: track.album.id,
                 name: track.album.name,
-                image: track.album.images[0].url,
+                image: track.album.images.length > 0 ? track.album.images[0].url: '',
                 releaseDate: track.album.release_date,
                 type: track.album.type
             },

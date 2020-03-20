@@ -35,7 +35,7 @@ class Album extends React.Component {
     prepareAlbum = (album) => {
         this.setState({
             name: album.name,
-            image: album.images[0].url,
+            image: album.images.length > 0 ? album.images[0].url : '',
             type: album.type,
             artists: album.artists.map(artist => {
                 return { id: artist.id, name: artist.name }

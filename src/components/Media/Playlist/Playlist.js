@@ -31,7 +31,7 @@ class Playlist extends React.Component {
     preparePlaylist = (playlist) => {
         this.setState({
             name: playlist.name,
-            image: playlist.images[0].url,
+            image: playlist.images.length > 0 ? playlist.images[0].url : '',
             description: playlist.description,
             type: playlist.type,
             tracks: {

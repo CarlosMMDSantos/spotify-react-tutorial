@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
             return {
                 id: track.id,
                 name: track.name,
-                image: track.album.images[0].url,
+                image: track.album.images.length > 0 ? track.album.images[0].url : '',
                 type: 'track',
                 description: track.artists[0].name + ' - ' + track.album.name
             }
@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
             return {
                 id: artist.id,
                 name: artist.name,
-                image: artist.images[0].url,
+                image: artist.images.length > 0 ? artist.images[0].url : 0,
                 type: 'artist',
                 description: ''
             }

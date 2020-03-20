@@ -18,7 +18,7 @@ class UserTopBar extends React.Component {
                         {auth.profile.display_name}
                     </div>
                     <div className="right">
-                        <img src={auth.profile.images[0].url} style={{height: "2rem", borderRadius: "100%"}}/>
+                        <img src={auth.profile.images.length > 0 ? auth.profile.images[0].url : ''} style={{height: "2rem", borderRadius: "100%"}}/>
                     </div>
                 </div>
               </Dropdown>

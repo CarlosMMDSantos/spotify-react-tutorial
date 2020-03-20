@@ -27,7 +27,7 @@ class Playlists extends React.Component {
             return {
                 id: playlist.id,
                 name: playlist.name,
-                image: playlist.images[0].url,
+                image: playlist.images.length > 0 ? playlist.images[0].url : '',
                 type: 'playlists'
             }
         })
