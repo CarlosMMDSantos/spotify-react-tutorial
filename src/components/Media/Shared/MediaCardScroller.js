@@ -2,7 +2,7 @@ import React from 'react'
 import MediaCard from './MediaCard'
 
 class CardScroller extends React.Component {
-    render (props) {
+    render () {
         return (
             <div className="card-scroller">
                 {this.props.items.map(item => {

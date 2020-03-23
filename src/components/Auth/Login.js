@@ -1,16 +1,16 @@
 import React from 'react'
 import { Grid, Card, CardContent, Button } from '@material-ui/core'
-import auth from './Auth'
+import { connect } from 'react-redux'
 
 class Login extends React.Component {
     constructor (props) {
         super(props)
-        //this.handleLogin()
     }
 
-    handleLogin() {
-        auth.signIn()
+    signIn = () => {
+        window.location.href = this.props.oauth.token.getUri()
     }
+    
 
     render() {
         return (
@@ -30,7 +30,7 @@ class Login extends React.Component {
                             <br/>
                             <br/>
                             <Grid item xs={12}>
-                                <Button variant="contained" color="primary" onClick={this.handleLogin}>
+                                <Button variant="contained" color="primary" onClick={this.signIn}>
                                     Login with Spotify
                                 </Button>
                             </Grid>
@@ -42,4 +42,8 @@ class Login extends React.Component {
     }
 }
 
-export default Login
+const mapStateToProps = state => ({
+    oauth: state.authReducer.oauth
+})
+
+export default connect(mapStateToProps)(Login)

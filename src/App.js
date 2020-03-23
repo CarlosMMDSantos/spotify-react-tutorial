@@ -1,18 +1,32 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import { Switch , Route } from 'react-router-dom';
+import thunk from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
 
 import HomePage from './components/Pages/HomePage'
 import Callback from './components/Auth/Callback';
 import Login from './components/Auth/Login'
 import SecuredRoute from './components/Auth/SecuredRoute'
 
+import rootStore from './store/index'
+
+const store = createStore(
+  rootStore,
+  applyMiddleware(thunk)
+)
+
 function App() {
   return (
-    <div className="full-viewport-height full-width">
-      <Route exact path='/callback' component={Callback}/>
-      <Route exact path='/login' component={Login}/>
-      <SecuredRoute exact path='/' component={HomePage} />
-    </div>
+    <Provider store={store}>
+      <div className="full-viewport-height full-width">
+        <Switch>
+          <Route exact path='/callback' component={Callback}/>
+          <Route exact path='/login' component={Login}/>
+          <SecuredRoute path='/' component={HomePage} />
+        </Switch>
+      </div>
+    </Provider>
   );
 }
 

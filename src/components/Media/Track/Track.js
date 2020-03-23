@@ -1,65 +1,34 @@
 import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import request from '../../../api/spotifyFetch'
+import { getTrack, resetTrack } from './../../../store/Tracks/actions'
 
 import { Grid } from '@material-ui/core'
 import MediaHeader from './../Shared/MediaHeader'
 
 class Track extends React.Component {
-    constructor (props) {
-        super(props)
 
-        this.state = {
-            name: '',
-            duration: 0,
-            type: 'track',
-            album: {},
-            artists: [],
-            loading: true
-        }
-
-        this.getTrackInfo()
+    componentDidMount () {
+        this.props.getTrack(this.props.match.params.id)
     }
 
-    getTrackInfo = () => {
-        request.get('/tracks/' + this.props.match.params.id).then(response => {
-            this.prepareTrack(response)
-        })
-    }
-
-    prepareTrack = (track) => {
-        this.setState({
-            name: track.name,
-            duration: track.duration_ms,
-            album: {
-                id: track.album.id,
-                name: track.album.name,
-                image: track.album.images.length > 0 ? track.album.images[0].url: '',
-                releaseDate: track.album.release_date,
-                type: track.album.type
-            },
-            artists: track.artists.map(artist => {
-                return {
-                    id: artist.id,
-                    name: artist.name
-                }
-            }),
-            loading: false
-        })
+    componentWillUnmount () {
+        this.props.resetTrack()
     }
 
     render () {
         return (
             <Grid container>
-                { this.state.loading && 
+                { this.props.loading && 
                     <Grid item xs={12}>
                         <span>Loading...</span>
                     </Grid>
                 }
 
-                { !this.state.loading &&
+                { !this.props.loading &&
                     <Grid item xs={12}>
-                        <MediaHeader data={{name: this.state.name, image: this.state.album.image, type: this.state.type, artists: this.state.artists, album: this.state.album}}/>
+                        <MediaHeader data={{name: this.props.name, image: this.props.album.image, type: this.props.type, artists: this.props.artists, album: this.props.album}}/>
                     </Grid> 
                 }
             </Grid>
@@ -67,4 +36,21 @@ class Track extends React.Component {
     }
 }
 
-export default withRouter(Track)
+const mapStateToProps = state => ({
+    name: state.trackReducer.name,
+    type: state.trackReducer.type,
+    album: state.trackReducer.album,
+    type: state.trackReducer.type,
+    artists: state.trackReducer.artists,
+    loading: state.trackReducer.loading
+})
+
+const mapDispatchToProps = {
+    getTrack: getTrack,
+    resetTrack: resetTrack
+}
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Track)

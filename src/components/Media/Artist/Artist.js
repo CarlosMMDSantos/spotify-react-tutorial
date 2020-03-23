@@ -1,92 +1,56 @@
 import React from 'react'
 import {withRouter} from 'react-router'
-import request from '../../../api/spotifyFetch'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { getArtist, resetArtist } from './../../../store/Artists/actions'
 
 import { Grid } from '@material-ui/core'
 import CardScroller from '../Shared/MediaCardScroller'
 import MediaHeader from './../Shared/MediaHeader'
 
 class Artist extends React.Component {
-    constructor (props) {
-        super(props)
 
-        this.state = {
-            name: '',
-            image: null,
-            type: null,
-            topTracks: [],
-            albums: []
-        }
-
-        this.getArtist()
+    componentDidMount () {
+        this.props.getArtist(this.props.match.params.id)
     }
 
-    getArtist = () => {
-        Promise.all([
-            request.get('/artists/' + this.props.match.params.id),
-            request.get('/artists/' + this.props.match.params.id + '/top-tracks?country=PT'),
-            request.get('/artists/' + this.props.match.params.id + '/albums')
-        ]).then(data => {
-            this.prepareArtist(data[0])
-            this.prepareTracks(data[1].tracks)
-            this.prepareAlbums(data[2].items)
-        })
-        
-    }
-
-    prepareArtist = (artist) => {
-        this.setState({
-            name: artist.name,
-            image: artist.images.length > 0 ? artist.images[0].url : '',
-            type: 'artist'
-        })
-    }
-
-    prepareTracks = (tracks) => {
-        this.setState({
-            topTracks: tracks.map(track => {
-                return {
-                    id: track.id,
-                    name: track.name,
-                    duration: track.duration_ms,
-                    image: track.album.images.length > 0 ? track.album.images[0].url : '',
-                    type: 'track'
-                }
-            })
-        })
-    }
-
-    prepareAlbums = (albums) => {
-        this.setState({
-            albums: albums.map(album => {
-                return {
-                    id: album.id,
-                    name: album.name,
-                    image: album.images.length > 0 ? album.images[0].url : '',
-                    releaseDate: album.release_date,
-                    type: 'album',
-                }
-            })
-        })
+    componentWillUnmount () {
+        this.props.resetArtist()
     }
 
     render () {
         return (
             <Grid container>
                 <Grid item xs={12}>
-                    <MediaHeader data={{name: this.state.name, image: this.state.image, type: this.state.type}}/>
+                    <MediaHeader data={{name: this.props.name, image: this.props.image, type: this.props.type}}/>
                 </Grid>
                 <Grid item xs={12}>
                     <h3>Top tracks</h3>
-                    <CardScroller items={this.state.topTracks}/>
+                    <CardScroller items={this.props.topTracks}/>
                 </Grid>
                 <Grid item xs={12}>
                     <h3>Albums</h3>
-                    <CardScroller items={this.state.albums}/>
+                    <CardScroller items={this.props.albums}/>
                 </Grid>
             </Grid>
         )
     }
 }
 
-export default withRouter(Artist)
+const mapStateToProps = state => ({
+    name: state.artistReducer.artist.name,
+    image: state.artistReducer.artist.image,
+    type: state.artistReducer.type,
+    topTracks: state.artistReducer.topTracks,
+    albums: state.artistReducer.albums
+})
+
+const mapDispatchToProps = {
+    getArtist: getArtist,
+    resetArtist: resetArtist
+}
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Artist)

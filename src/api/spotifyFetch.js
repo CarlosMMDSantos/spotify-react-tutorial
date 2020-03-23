@@ -1,11 +1,9 @@
-import auth from './../components/Auth/Auth'
-
 const baseUrl = 'https://api.spotify.com/v1'
 
-async function request(url, params, method = 'GET') {
+async function request(url, params, accessToken = '', method = 'GET') {
 
     const headers = {
-        'Authorization': 'Bearer ' + (auth ? auth.accessToken : '')
+        'Authorization': 'Bearer ' + accessToken
     }
 
     const options = {
@@ -20,7 +18,7 @@ async function request(url, params, method = 'GET') {
         options.body = JSON.stringify(params);
       }
     }
-  
+
     const response = await fetch(baseUrl + url, options);
   
     if (response.status !== 200) {
@@ -44,20 +42,20 @@ async function request(url, params, method = 'GET') {
     };
   }
   
-  function get(url, params) {
-    return request(url, params);
+  function get(url, params, accessToken) {
+    return request(url, params, accessToken);
   }
   
-  function create(url, params) {
-    return request(url, params, 'POST');
+  function create(url, params, accessToken) {
+    return request(url, params, accessToken, 'POST');
   }
   
-   function update(url, params) {
-    return request(url, params, 'PUT');
+   function update(url, params, accessToken) {
+    return request(url, params, accessToken, 'PUT');
   }
   
-  function remove(url, params) {
-    return request(url, params, 'DELETE');
+  function remove(url, params, accessToken) {
+    return request(url, params, accessToken, 'DELETE');
   }
   
   export default {
