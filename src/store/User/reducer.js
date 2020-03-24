@@ -1,10 +1,11 @@
-import { BEGIN_USER_REQUEST, SET_USER, SET_RECENTLY_PLAYED, SET_TOP_ARTISTS, SET_TOP_TRACKS, SET_USER_DASHBOARD_DATA } from './actions'
+import { BEGIN_USER_REQUEST, SET_USER, SET_RECENTLY_PLAYED, SET_TOP_ARTISTS, SET_TOP_TRACKS, SET_PLAYLISTS, SET_USER_DASHBOARD_DATA } from './actions'
 
 const initialState = {
     user: {},
     recentlyPlayedTracks: [],
     topTracks: [],
     topArtists: [],
+    playlists: [],
     loading: false
 }
 
@@ -34,6 +35,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 topArtists: action.data
+            }
+        case SET_PLAYLISTS:
+            return {
+                ...state,
+                playlists: action.data
             }
         case SET_USER_DASHBOARD_DATA:
             return {

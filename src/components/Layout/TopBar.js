@@ -1,17 +1,17 @@
 import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { Redirect } from 'react-router-dom'
 
 import {AppBar, Toolbar, Grid, TextField, IconButton} from '@material-ui/core'
 import { Search, ArrowBackIos } from '@material-ui/icons'
 
-class TopBar extends React.Component {
-    constructor (props) {
-        super (props)
+import { search, resetSearchResults } from './../../store/Search/actions'
 
-        this.state = {
-            query: ''
-        }
+class TopBar extends React.Component {
+
+    componentWillUnmount () {
+        this.props.resetSearchResults()
     }
 
     goBack = () => {
@@ -22,11 +22,7 @@ class TopBar extends React.Component {
         this.props.history.push('/search')
     }
 
-    extractValueToSearch = (e) => {
-        this.setState({
-            query: e.target.value
-        })
-
+    search = (e) => {
         this.props.search(e.target.value)
     }
 
@@ -44,7 +40,7 @@ class TopBar extends React.Component {
                             <Search />
                         </Grid>
                         <Grid item onClick={this.goToSearch}>
-                            <TextField id="input-with-icon-grid" label="Search" value={this.state.query} onChange={this.extractValueToSearch}/>
+                            <TextField id="input-with-icon-grid" label="Search" onChange={this.search}/>
                         </Grid>
                     </Grid>
                 </Toolbar>
@@ -53,4 +49,12 @@ class TopBar extends React.Component {
     }
 }
 
-export default withRouter(TopBar)
+const mapDispatchToProps = {
+    search: search,
+    resetSearchResults: resetSearchResults
+}
+
+export default compose(
+    withRouter,
+    connect(null, mapDispatchToProps)
+)(TopBar)

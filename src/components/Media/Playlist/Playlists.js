@@ -1,36 +1,13 @@
 import React from 'react'
-import request from './../../../api/spotifyFetch'
+import { connect } from 'react-redux'
 import { Box, Typography } from '@material-ui/core'
 import CardContainer from './../Shared/CardContainer'
+import { getUserPlaylists } from './../../../store/User/actions'
 
 class Playlists extends React.Component {
-    constructor (props) {
-        super (props)
-
-        this.state = {
-            myPlaylists: []
-        }
-
-        this.getPlaylists()
-    }
-
-    getPlaylists = () => {
-        request.get('/me/playlists').then(data => {
-            this.setState({
-                myPlaylists: this.preparePlaylists(data.items)
-            })
-        })
-    }
-
-    preparePlaylists = (playlists) => {
-        return playlists.map(playlist => {
-            return {
-                id: playlist.id,
-                name: playlist.name,
-                image: playlist.images.length > 0 ? playlist.images[0].url : '',
-                type: 'playlists'
-            }
-        })
+    
+    componentDidMount () {
+        this.props.getUserPlaylists()
     }
 
     render() {
@@ -39,10 +16,18 @@ class Playlists extends React.Component {
                 <Typography variant="h4" gutterBottom>
                     My Playlists
                 </Typography>
-                <CardContainer items={this.state.myPlaylists}/>
+                <CardContainer items={this.props.myPlaylists}/>
             </Box>
         )
     }
 }
 
-export default Playlists
+const mapStateToProps = state => ({
+    myPlaylists: state.userReducer.playlists
+})
+
+const mapDispatchToProps = {
+    getUserPlaylists: getUserPlaylists
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlists)

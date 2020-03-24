@@ -1,90 +1,35 @@
 import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Grid } from '@material-ui/core'
 import MediaHeader from './../Shared/MediaHeader'
 import MediaList from './../Shared/MediaList'
-import request from './../../../api/spotifyFetch'
+import { getPlaylist, getPlaylistTracks, resetPlaylist } from './../../../store/Playlists/actions'
 
 class Playlist extends React.Component {
-    constructor (props) {
-        super(props)
-
-        this.state = {
-            name: '',
-            image: '',
-            type: null,
-            tracks: {
-                items: [],
-                total: null
-            }
-        }
-
-        this.getPlaylist()
+    
+    componentDidMount () {
+        this.props.getPlaylist(this.props.match.params.id)
     }
 
-    getPlaylist = () => {
-        request.get('/playlists/' + this.props.match.params.id).then(response => {
-            this.preparePlaylist(response)
-        })
-    }
-
-    preparePlaylist = (playlist) => {
-        this.setState({
-            name: playlist.name,
-            image: playlist.images.length > 0 ? playlist.images[0].url : '',
-            description: playlist.description,
-            type: playlist.type,
-            tracks: {
-                total: playlist.tracks.total,
-                items: playlist.tracks.items.map(item => {
-                    return {
-                        id: item.track.id,
-                        name: item.track.name,
-                        artists: item.track.artists.map(artist => {
-                            return {
-                                id: artist.url,
-                                name: artist.name
-                            }
-                        }),
-                        duration: item.track.duration_ms
-                    }
-                })
-            }
-        })
+    componentWillUnmount () {
+        this.props.resetPlaylist()
     }
 
     showMore = () => {
-        request.get('/playlists/' + this.props.match.params.id + '/tracks?offset=' + this.state.tracks.items.length + '&limit=100').then(response => {
-            this.setState({
-                tracks: {
-                    total: response.total,
-                    items: this.state.tracks.items.concat(response.items.map(item => {
-                        return {
-                            id: item.track.id,
-                            name: item.track.name,
-                            artists: item.track.artists.map(artist => {
-                                return {
-                                    id: artist.url,
-                                    name: artist.name
-                                }
-                            }),
-                            duration: item.track.duration_ms
-                        }
-                    }))
-                }
-            })
-        })
+        this.props.getPlaylistTracks(this.props.match.params.id, this.props.tracks.items.length)
     }
 
     render () {
         return (
             <Grid container>
                 <Grid item xs={12}>
-                    <MediaHeader data={{name: this.state.name, image: this.state.image, type: this.state.type, description: this.state.description}}/>
+                    <MediaHeader data={{name: this.props.name, image: this.props.image, type: this.props.type, description: this.props.description}}/>
                 </Grid>
                 <Grid item xs={12}>
                     <h3>Tracks</h3>
-                    <MediaList tracks={this.state.tracks} showMore={this.showMore}/>
+                    <MediaList tracks={this.props.tracks} showMore={this.showMore}/>
                 </Grid>
             </Grid>
         )
@@ -92,4 +37,17 @@ class Playlist extends React.Component {
 
 }
 
-export default withRouter(Playlist)
+const mapStateToProps = state => ({
+    ...state.playlistReducer
+})
+
+const mapDispatchToProps = {
+    getPlaylist: getPlaylist,
+    getPlaylistTracks: getPlaylistTracks,
+    resetPlaylist: resetPlaylist
+}
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Playlist)

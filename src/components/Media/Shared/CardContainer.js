@@ -9,8 +9,8 @@ class CardContainer extends React.Component {
                 {
                     this.props.items.map(item => {
                         return (
-                            <Grid item>
-                                <MediaCard key={item.id} id={item.id} image={item.image} title={item.name} description={item.description} type={item.type}/>
+                            <Grid item key={item.id}>
+                                <MediaCard id={item.id} image={item.image} title={item.name} description={item.description} type={item.type}/>
                             </Grid>
                         )
                     })

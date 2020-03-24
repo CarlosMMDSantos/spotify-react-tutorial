@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Grid, Typography } from '@material-ui/core'
 import CardContainer from './../Media/Shared/CardContainer'
 
@@ -43,4 +44,11 @@ class SearchPage extends React.Component {
     }    
 }
 
-export default SearchPage
+const mapStateToProps = state => ({
+    tracks: state.searchReducer.tracks,
+    albums: state.searchReducer.albums,
+    artists: state.searchReducer.artists,
+    playlists: state.searchReducer.playlists
+})
+
+export default connect(mapStateToProps)(SearchPage)

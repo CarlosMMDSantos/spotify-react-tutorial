@@ -6,6 +6,7 @@ export const SET_USER = 'SET_USER'
 export const SET_RECENTLY_PLAYED = 'SET_RECENTLY_PLAYED'
 export const SET_TOP_TRACKS = 'SET_TOP_TRACKS'
 export const SET_TOP_ARTISTS = 'SET_TOP_ARTISTS'
+export const SET_PLAYLISTS = 'SET_PLAYLISTS'
 export const SET_USER_DASHBOARD_DATA = 'SET_USER_DASHBOARD_DATA'
 export const SUCCESS_USER_REQUEST = 'SUCCESS_USER_REQUEST'
 export const FAIL_USER_REQUEST = 'FAIL_USER_REQUEST'
@@ -21,6 +22,11 @@ export const setUser = data => ({
 
 export const setUserDashboardData = data => ({
     type: SET_USER_DASHBOARD_DATA,
+    data: data
+})
+
+export const setPlaylists = data => ({
+    type: SET_PLAYLISTS,
     data: data
 })
 
@@ -44,6 +50,14 @@ export function getDashboardData () {
             topTracks: prepareTracks(data[1].items),
             topArtists: prepareArtists(data[2].items),
         }))
+    }
+}
+
+export function getUserPlaylists () {
+    return async (dispatch, getState) => {
+        let playlists = await request.get('/me/playlists', null, getState().authReducer.accessToken)
+
+        dispatch(setPlaylists(preparePlaylists(playlists.items)))
     }
 }
 
@@ -71,6 +85,17 @@ function prepareArtists (artists) {
             image: artist.images.length > 0 ? artist.images[0].url : 0,
             type: 'artist',
             description: ''
+        }
+    })
+}
+
+function preparePlaylists (playlists) {
+    return playlists.map(playlist => {
+        return {
+            id: playlist.id,
+            name: playlist.name,
+            image: playlist.images.length > 0 ? playlist.images[0].url : '',
+            type: 'playlists'
         }
     })
 }
